@@ -1,3 +1,4 @@
+// Sterren-achtergrond
 const starsContainer = document.getElementById('stars');
 const starCount = 150;
 
@@ -12,13 +13,25 @@ for (let i = 0; i < starCount; i++) {
 
 // Fallback: als mailto niet werkt (geen mail-app ingesteld), kopieer het adres
 function copyEmailFallback(event, email) {
-    navigator.clipboard.writeText(email).then(() => {
-        alert(`Geen mail-app gevonden. Het e-mailadres "${email}" is gekopieerd naar je klembord — plak het in je eigen mail-app of Gmail.`);
-    }).catch(() => {
-        // Klembord niet beschikbaar, laat gewoon de mailto link zijn werk doen
-    });
+    let mailAppOpened = false;
+    const onBlur = () => {
+        mailAppOpened = true;
+    };
+    window.addEventListener('blur', onBlur);
+
+    setTimeout(() => {
+        window.removeEventListener('blur', onBlur);
+        if (!mailAppOpened) {
+            navigator.clipboard.writeText(email).then(() => {
+                alert(`Geen mail-app gevonden. Het e-mailadres "${email}" is gekopieerd naar je klembord.`);
+            }).catch(() => {
+                alert(`Geen mail-app gevonden. Stuur handmatig een bericht naar ${email}.`);
+            });
+        }
+    }, 800);
 }
 
+// Contactformulier
 document.querySelector('.contact-form button').addEventListener('click', (e) => {
     e.preventDefault();
 
@@ -42,22 +55,18 @@ Bericht: ${messageInput.value}`;
     const encodedSubject = encodeURIComponent(subject);
     const encodedBody = encodeURIComponent(plainBody);
 
-    // Detecteer of de mail-app daadwerkelijk opent (pagina verliest dan focus)
     let mailAppOpened = false;
     const onBlur = () => {
         mailAppOpened = true;
     };
     window.addEventListener('blur', onBlur);
 
-    // Probeer de mail-app te openen
     window.location.href = `mailto:${to}?subject=${encodedSubject}&body=${encodedBody}`;
 
-    // Na een korte wachttijd checken of het gelukt is
     setTimeout(() => {
         window.removeEventListener('blur', onBlur);
 
         if (!mailAppOpened) {
-            // Geen mail-app geopend -> kopieer als fallback
             const clipboardText =
 `Aan: ${to}
 Onderwerp: ${subject}
@@ -70,7 +79,6 @@ ${plainBody}`;
                 alert(`Er kon geen mail-app geopend worden. Stuur je bericht handmatig naar ${to}.`);
             });
         }
-        // Als mailAppOpened true is: niks doen, de mail-app is al open met alles ingevuld
     }, 800);
 
     nameInput.value = '';
