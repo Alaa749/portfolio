@@ -3,28 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alaa Almouse - Portfolio</title>
+    <title>Alaa Almousa - Portfolio</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="stars" id="stars"></div>
 
     <section class="hero">
-        <a href="mailto:101450@glr.nl" class="contact-info">101450@glr.nl</a>
-        <a href="#contact" class="linkedin-link">LINKEDIN</a>
+        <a href="mailto:101450@glr.nl" class="contact-info" onclick="copyEmailFallback(event, '101450@glr.nl')">101450@glr.nl</a>
+
+        <a href="https://www.linkedin.com/in/alaa-almousa-655562328" class="linkedin-link" target="_blank" rel="noopener">
+            LINKEDIN
+        </a>
         
         <div class="open-to-work" onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})">
-            OPEN TO WORK!
+            OP ZOEK NAAR STAGIER!
         </div>
 
         <div class="hero-title">
             ALAA
-            <img src="knight.png" alt="Knight Character" class="pixel-char">
-            ALMOUSE
+            <img src="knightremovebg-preview 1.png" alt="Knight Character" class="pixel-char">
+            ALMOUSA
         </div>
 
-        <div class="subtitle">creative software developer student</div>
-        <div class="skills">HTML, CSS, JS, PHP, C#</div>
+        <div class="subtitle">MBO Creative Software Developer (2e jaar)</div>
+        <div class="skills">HTML, CSS, JavaScript, PHP, C#, Unity</div>
 
         <div class="scroll-indicator" onclick="document.getElementById('about').scrollIntoView({behavior: 'smooth'})"></div>
     </section>
@@ -34,13 +37,14 @@
             <h2>OVER MIJ</h2>
             <div class="about-content">
                 <p style="margin-bottom: 20px;">
-                    Hallo! Ik ben Alaa Almouse, een gepassioneerde software development student met een liefde voor creatieve en innovatieve oplossingen.
+                    Hallo! Ik ben Alaa Almousa, een tweedejaars MBO-student Creative Software Developer aan het Grafisch Lyceum Rotterdam.
                 </p>
                 <p style="margin-bottom: 20px;">
-                    Ik combineer moderne webtechnologieën met een unieke esthetiek, zoals je kunt zien in mijn 8-bit geïnspireerde portfolio.
+                    Ik heb interesse in zowel game development als web development en werk graag aan interactieve projecten.
                 </p>
                 <p>
-                    Mijn focus ligt op het bouwen van gebruiksvriendelijke applicaties met clean code en aandacht voor detail.
+                    Tijdens mijn opleiding heb ik ervaring opgedaan met HTML, CSS en JavaScript door schoolopdrachten en projecten.
+                    Ik ben gemotiveerd om te leren en op zoek naar een stage waar ik mijn vaardigheden verder kan ontwikkelen binnen een professioneel team.
                 </p>
             </div>
         </div>
@@ -50,9 +54,56 @@
         <div class="container">
             <h2>PROJECTEN</h2>
             <div class="projects-grid">
+
+                <div class="project-card">
+                    <h3>► Robo Town</h3>
+                    <p>
+                        Voor dit schoolproject heb ik een volledige town/village gebouwd in Blender met een zelfgekozen thema.
+                        Ik koos voor een sci-fi wild west stijl: een woestijnstad met futuristische elementen, robots en western architectuur.
+                        Dit project heeft mij veel geleerd over 3D-modellering, scènecompositie en lighting in Blender.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-tag">Blender</span>
+                        <span class="tech-tag">3D Modelling</span>
+                        <span class="tech-tag">Sci-Fi Wild West</span>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <h3>► VYBE (Muziek App)</h3>
+                    <p>
+                        Voor een schoolopdracht heb ik een volledige muziek webapplicatie ontwikkeld met inspiratie van Spotify.
+                        Gebruikers kunnen nummers bekijken, bladeren door artiesten en een persoonlijke muziekervaring beleven.
+                        Het project omvatte zowel een front-end als een back-end met PHP en een database.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-tag">HTML</span>
+                        <span class="tech-tag">CSS</span>
+                        <span class="tech-tag">JavaScript</span>
+                        <span class="tech-tag">PHP</span>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <h3>► Submarine Speedrun Game</h3>
+                    <p>
+                        Een speedrun game gemaakt in Unity waarin de speler een submarine bestuurt en zo snel mogelijk obstakels moet ontwijken
+                        om het level te halen. Dit project heeft mij geholpen om beter te worden in Unity en C# scripting.
+                        Ik kan ook een beetje werken met Blender (basis 3D).
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-tag">Unity</span>
+                        <span class="tech-tag">C#</span>
+                        <span class="tech-tag">Game Development</span>
+                        <span class="tech-tag">Blender (basic)</span>
+                    </div>
+                </div>
+
                 <div class="project-card">
                     <h3>► Portfolio Website</h3>
-                    <p>Een retro-geïnspireerde portfolio website met moderne animaties en interactieve elementen.</p>
+                    <p>
+                        Mijn eigen portfolio website met een retro 8-bit stijl, moderne animaties en interactieve elementen.
+                    </p>
                     <div class="project-tech">
                         <span class="tech-tag">HTML</span>
                         <span class="tech-tag">CSS</span>
@@ -60,35 +111,6 @@
                     </div>
                 </div>
 
-                <div class="project-card">
-                    <h3>► Web Applicatie</h3>
-                    <p>Een dynamische web applicatie met database integratie en gebruikersbeheer.</p>
-                    <div class="project-tech">
-                        <span class="tech-tag">PHP</span>
-                        <span class="tech-tag">MySQL</span>
-                        <span class="tech-tag">JavaScript</span>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <h3>► Game Project</h3>
-                    <p>Een 2D pixel art game ontwikkeld met C# en Unity voor mijn studie.</p>
-                    <div class="project-tech">
-                        <span class="tech-tag">C#</span>
-                        <span class="tech-tag">Unity</span>
-                        <span class="tech-tag">Game Design</span>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <h3>► Dashboard Tool</h3>
-                    <p>Een analytics dashboard voor het visualiseren van data met interactieve grafieken.</p>
-                    <div class="project-tech">
-                        <span class="tech-tag">JavaScript</span>
-                        <span class="tech-tag">Chart.js</span>
-                        <span class="tech-tag">API</span>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
@@ -98,7 +120,8 @@
             <h2>CONTACT</h2>
             <div class="contact-content">
                 <p style="font-size: 20px; margin-bottom: 30px;">
-                    Ben je op zoek naar een gemotiveerde developer? Laten we samenwerken!
+                    Op zoek naar een gemotiveerde stagiair in Web of Game Development?
+Ik kom graag met je in contact!
                 </p>
 
                 <div class="contact-form">
@@ -109,14 +132,13 @@
                 </div>
 
                 <div class="social-links">
-                    <a href="mailto:101450@glr.nl">EMAIL</a>
-                    <a href="#" target="_blank">LINKEDIN</a>
-                    <a href="#" target="_blank">GITHUB</a>
+                    <a href="mailto:101450@glr.nl" onclick="copyEmailFallback(event, '101450@glr.nl')">EMAIL</a>
+                    <a href="https://www.linkedin.com/in/alaa-almousa-655562328" target="_blank" rel="noopener">LINKEDIN</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <script src="script.js"></script>
+    <script src="1script.js"></script>
 </body>
 </html>
