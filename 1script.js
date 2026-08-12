@@ -10,6 +10,15 @@ for (let i = 0; i < starCount; i++) {
     starsContainer.appendChild(star);
 }
 
+// Fallback: als mailto niet werkt (geen mail-app ingesteld), kopieer het adres
+function copyEmailFallback(event, email) {
+    navigator.clipboard.writeText(email).then(() => {
+        alert(`Geen mail-app gevonden. Het e-mailadres "${email}" is gekopieerd naar je klembord — plak het in je eigen mail-app of Gmail.`);
+    }).catch(() => {
+        // Klembord niet beschikbaar, laat gewoon de mailto link zijn werk doen
+    });
+}
+
 document.querySelector('.contact-form button').addEventListener('click', (e) => {
     e.preventDefault();
 
@@ -23,78 +32,48 @@ document.querySelector('.contact-form button').addEventListener('click', (e) => 
     }
 
     const to = '101450@glr.nl';
-    const subject = encodeURIComponent(`Portfolio contact - ${nameInput.value}`);
+    const subject = `Portfolio contact - ${nameInput.value}`;
 
-    const body = encodeURIComponent(
-`Naam:
-${nameInput.value}
+    const plainBody =
+`Naam: ${nameInput.value}
+Email: ${emailInput.value}
+Bericht: ${messageInput.value}`;
 
-Email:
-${emailInput.value}
+    const encodedSubject = encodeURIComponent(subject);
+    const encodedBody = encodeURIComponent(plainBody);
 
-Bericht:
-${messageInput.value}`
-    );
+    // Detecteer of de mail-app daadwerkelijk opent (pagina verliest dan focus)
+    let mailAppOpened = false;
+    const onBlur = () => {
+        mailAppOpened = true;
+    };
+    window.addEventListener('blur', onBlur);
 
-    window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
+    // Probeer de mail-app te openen
+    window.location.href = `mailto:${to}?subject=${encodedSubject}&body=${encodedBody}`;
+
+    // Na een korte wachttijd checken of het gelukt is
+    setTimeout(() => {
+        window.removeEventListener('blur', onBlur);
+
+        if (!mailAppOpened) {
+            // Geen mail-app geopend -> kopieer als fallback
+            const clipboardText =
+`Aan: ${to}
+Onderwerp: ${subject}
+
+${plainBody}`;
+
+            navigator.clipboard.writeText(clipboardText).then(() => {
+                alert(`Er kon geen mail-app geopend worden. Je bericht is gekopieerd naar je klembord — plak het in een e-mail naar ${to}.`);
+            }).catch(() => {
+                alert(`Er kon geen mail-app geopend worden. Stuur je bericht handmatig naar ${to}.`);
+            });
+        }
+        // Als mailAppOpened true is: niks doen, de mail-app is al open met alles ingevuld
+    }, 800);
 
     nameInput.value = '';
     emailInput.value = '';
     messageInput.value = '';
-});
-function openVideoModal() {
-    const modal = document.getElementById('videoModal');
-    const video = document.getElementById('submarineVideo');
-    modal.classList.add('active');
-    video.play();
-}
-
-function closeVideoModal(event) {
-    if (event && event.target !== document.getElementById('videoModal')) return;
-    const modal = document.getElementById('videoModal');
-    const video = document.getElementById('submarineVideo');
-    modal.classList.remove('active');
-    video.pause();
-    video.currentTime = 0;
-}
-
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeVideoModal();
-});
-
-// Slideshow
-const robotownImages = [
-    'robotown1.png'
-    // Voeg hier meer afbeeldingen toe: 'robotown2.png', 'robotown3.png', etc.
-];
-let currentSlide = 0;
-
-function openSlideshowModal() {
-    currentSlide = 0;
-    updateSlide();
-    document.getElementById('slideshowModal').classList.add('active');
-}
-
-function closeSlideshowModal(event) {
-    if (event && event.target !== document.getElementById('slideshowModal')) return;
-    document.getElementById('slideshowModal').classList.remove('active');
-}
-
-function changeSlide(dir) {
-    currentSlide = (currentSlide + dir + robotownImages.length) % robotownImages.length;
-    updateSlide();
-}
-
-function updateSlide() {
-    document.getElementById('slideshowImg').src = robotownImages[currentSlide];
-    document.getElementById('slideCounter').textContent = `${currentSlide + 1} / ${robotownImages.length}`;
-}
-
-document.addEventListener('keydown', (e) => {
-    const modal = document.getElementById('slideshowModal');
-    if (modal.classList.contains('active')) {
-        if (e.key === 'ArrowLeft') changeSlide(-1);
-        if (e.key === 'ArrowRight') changeSlide(1);
-        if (e.key === 'Escape') closeSlideshowModal();
-    }
 });
